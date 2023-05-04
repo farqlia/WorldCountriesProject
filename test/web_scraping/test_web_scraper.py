@@ -76,9 +76,9 @@ def countries():
 
 
 def test_for_extracting_countries_names(countries):
-    print(countries)
     # these are not countries so we won't want them
     assert 'World' in countries
+    assert 'European Union' in countries
     assert 'West Bank' in countries
     assert len(countries) == 253
 
@@ -93,6 +93,14 @@ def test_filter_out_differing_countries(countries):
     for diff in differences_2:
         print(diff)
 
+    print("----------------------------")
+    intersection = set(countries).intersection(set(web_scraper.get_true_countries()))
+    for c in intersection:
+        print(c)
 
-def test_filter_out_true_country_names():
-    web_scraper.filter_out_true_countries([])
+
+def test_filter_out_true_country_names(countries):
+    filtered_countries = web_scraper.filter_out_true_countries(countries)
+    assert 'World' not in filtered_countries
+    assert 'West Bank' not in filtered_countries
+    assert 'European Union' not in filtered_countries

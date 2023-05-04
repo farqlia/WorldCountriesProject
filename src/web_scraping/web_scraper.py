@@ -1,3 +1,4 @@
+import csv
 import re
 import typing
 
@@ -27,18 +28,22 @@ def retrieve_paragraph_contents(html):
 
 def get_all_countries(html):
     country_paragraphs = retrieve_paragraph_contents(html)
-    return [row.country for row in country_paragraphs]
+    countries = [row.country for row in country_paragraphs]
+    countries.remove('World')
+    return countries
 
 
 def get_true_countries():
-    with open(DATA_PATH.joinpath('countries.json')) as f:
-        world_countries_codes = json.load(f)
-        world_countries = [entry['name'] for entry in world_countries_codes]
+    with open(DATA_PATH.joinpath('export.csv')) as f:
+        reader = csv.reader(f, delimiter=',')
+        next(reader)
+        world_countries = [row[0] for row in reader]
+        world_countries.remove('Tokelau')
         return world_countries
 
 
 def filter_out_true_countries(countries):
-    pass
+    return list(set(countries).intersection(set(get_true_countries())))
 
 
 
