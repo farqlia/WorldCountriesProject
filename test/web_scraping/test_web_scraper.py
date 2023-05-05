@@ -64,8 +64,14 @@ html_doc = '''
 
 def test_for_correct_retrieving_paragraph_content_from_webpage():
     data = web_scraper.retrieve_paragraph_contents(html_doc)
-    countries = [row.country for row in data]
-    assert countries == ['Afganistan', 'Albania']
+    assert data[0].country == 'Afganistan'
+    assert list(data[0].paragraph_content) == [
+        '3.3% of GDP (2019) (approximately $2.35 billion)',
+        '3.2% of GDP (2018) (approximately $2.31 billion)',
+        '3.3% of GDP (2017) (approximately $2.34 billion)',
+        '3.1% of GDP (2016) (approximately $2.6 billion)',
+        '2.9% of GDP (2015) (approximately $2.22 billion)'
+    ]
 
 
 @pytest.fixture()
@@ -83,6 +89,14 @@ def test_for_extracting_countries_names(countries):
     assert len(countries) == 253
 
 
+def test_filter_out_true_country_names(countries):
+    filtered_countries = web_scraper.filter_out_true_countries(countries)
+    assert 'World' not in filtered_countries
+    assert 'West Bank' not in filtered_countries
+    assert 'European Union' not in filtered_countries
+
+
+# Not a real tests
 def test_filter_out_differing_countries(countries):
     print()
     differences = set(countries).difference(set(web_scraper.get_true_countries()))
@@ -99,8 +113,10 @@ def test_filter_out_differing_countries(countries):
         print(c)
 
 
-def test_filter_out_true_country_names(countries):
-    filtered_countries = web_scraper.filter_out_true_countries(countries)
-    assert 'World' not in filtered_countries
-    assert 'West Bank' not in filtered_countries
-    assert 'European Union' not in filtered_countries
+def test_for_stripped_strings():
+    soup = bs4.BeautifulSoup(html_doc)
+    html_fragments = soup.stripped_strings
+    print(html_fragments)
+
+    for fragment in html_fragments:
+        print(fragment)

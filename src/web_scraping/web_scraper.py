@@ -20,7 +20,7 @@ def retrieve_paragraph_contents(html):
     country_paragraphs = []
     for row in list_of_countries_data:
         country = row.a.contents[0]
-        paragraph = row.p
+        paragraph = row.p.stripped_strings
         country_paragraphs.append(CountryData(country, paragraph))
 
     return country_paragraphs
