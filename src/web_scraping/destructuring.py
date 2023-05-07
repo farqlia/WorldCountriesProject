@@ -2,6 +2,9 @@ import re
 HEADER_PATTERN = re.compile("(.+?):$")
 LIST_ENTRY_PATTERN = re.compile("(.+?): (.+)")
 
+# Should also handle note texts, that is, delete them
+# notes should be logged at debug level to a special file
+
 
 def get_key(header):
     key = HEADER_PATTERN.match(header)
@@ -15,8 +18,13 @@ def get_key_value(entry):
 
 def destructure_list_like(html_fragments):
     mapping = {}
-    for header, value in zip(html_fragments[::2], html_fragments[1::2]):
-        mapping[get_key(header)] = value
+    i = 0
+    for element in html_fragments:
+        if i % 2 == 0:
+            header = element
+        else:
+            mapping[get_key(header)] = element
+        i = (i + 1) % 2
     return mapping
 
 
@@ -41,10 +49,10 @@ def destructure_nested_lists(html_fragments):
 
 
 def destructure_list_like_with_text(html_fragments):
-    mapping = {'caption': html_fragments[0]}
-    mapping.update(destructure_list_like(html_fragments[1:]))
+    mapping = {'caption': next(html_fragments)}
+    mapping.update(destructure_list_like(html_fragments))
     return mapping
 
 
 def destructure_text_paragraph(html_fragments):
-    return html_fragments
+    return list(html_fragments)

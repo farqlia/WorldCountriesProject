@@ -77,7 +77,7 @@ def test_for_correct_retrieving_paragraph_content_from_webpage():
 @pytest.fixture()
 def countries():
     response = requests.get("https://www.cia.gov/the-world-factbook/field/death-rate/")
-    countries = web_scraper.get_all_countries(response.content)
+    countries = web_scraper.retrieve_countries(response.content)
     return countries
 
 
@@ -96,11 +96,16 @@ def test_filter_out_true_country_names(countries):
     assert 'European Union' not in filtered_countries
 
 
+def test_get_true_countries():
+    print(len(web_scraper.get_all_countries()))
+    print(web_scraper.get_all_countries())
+
+
 # Not a real tests
 def test_filter_out_differing_countries(countries):
     print()
-    differences = set(countries).difference(set(web_scraper.get_true_countries()))
-    differences_2 = set(web_scraper.get_true_countries()).difference(set(countries))
+    differences = set(countries).difference(set(web_scraper.get_all_countries()))
+    differences_2 = set(web_scraper.get_all_countries()).difference(set(countries))
     for diff in differences:
         print(diff)
     print("---------------------------")
@@ -108,7 +113,8 @@ def test_filter_out_differing_countries(countries):
         print(diff)
 
     print("----------------------------")
-    intersection = set(countries).intersection(set(web_scraper.get_true_countries()))
+    intersection = set(countries).intersection(set(web_scraper.get_all_countries()))
+    print(len(intersection))
     for c in intersection:
         print(c)
 

@@ -39,13 +39,9 @@ test_case_1_2 = '''
 </p>
 '''
 
-
-
-
-
 def to_list(html):
     soup = bs4.BeautifulSoup(html)
-    return list(soup.stripped_strings)
+    return soup.stripped_strings
 
 
 class TestDestructureListLikeParagraph:
