@@ -50,7 +50,7 @@ class TestConvertToNumber:
                                   -31_190_000
                                 ])))
     def test_for_valid_cases(self, case, value):
-        assert convert_values.convert_to_number(case) == value
+        assert convert_values.convert_to_number(case)[0] == value
 
 
 class TestQuantityOf:
@@ -84,7 +84,7 @@ class TestConvertOrGetNone:
     def test_result_is_none(self, func, arg):
         assert convert_values.convert_or_get_nan(func, arg) == [np.NAN]
 
-    @pytest.mark.parametrize("func,arg,expected", [(convert_values.convert_to_number, "123.123", 123.123),
+    @pytest.mark.parametrize("func,arg,expected", [(convert_values.convert_to_number, "123.123", (123.123, )),
                                           (convert_values.convert_quantity_of, "38.6% of household expenditures (2018 est.)", (38.6, "household expenditures")),
                                           (convert_values.convert_fraction, "6.6 deaths/1,000 population (2023 est.)", (6.6, "deaths/population"))])
     def test_result_is_not_none(self, func, arg, expected):

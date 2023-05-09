@@ -7,6 +7,7 @@ import src.web_scraping.convert_values as convert_values
 from typing import List
 import pandas as pd
 
+
 def create_empty_df(columns, dtype=float):
     df = pd.DataFrame(columns=columns,
                       index=get_all_countries(),

@@ -48,3 +48,29 @@ class TestGetCountryInfantMortalityRate:
     def test_case_with_nan(self, sample_with_none):
         df = numerical_metrics.get_country_infant_mortality_rate([sample_with_none])
         assert all(np.isnan(df.loc['Angola']))
+
+
+class TestPopulationGrowthRate:
+
+    @pytest.fixture()
+    def samples(self):
+        arguments = [web_scraper.CountrySample(
+            "Afghanistan", ["2.26% (2023 est.)"]
+        ), web_scraper.CountrySample("Estonia", ["-0.74% (2023 est.)"])]
+        return arguments
+
+    def test_get_population_growth_rate(self, samples):
+        expected = pd.DataFrame(data=[[2.26], [-0.74]],
+                                index=["Afghanistan", "Estonia"],
+                                columns=["rate"])
+        actual = numerical_metrics.get_population_growth_rate(samples)
+        pd_test.assert_frame_equal(actual.loc[["Afghanistan", "Estonia"]],
+                                   expected)
+
+    @pytest.mark.xfail("Index is not present")
+    @pytest.mark.parametrize("case", [
+        web_scraper.CountrySample("European Union", "(2021 est.) 0.10%"),
+        web_scraper.CountrySample("Cocos (Keeling) Islands", "NA")
+    ])
+    def test_malformed_or_none(self, case):
+        assert not numerical_metrics.get_population_growth_rate([case]).loc[case.country]

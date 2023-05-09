@@ -42,7 +42,7 @@ def convert_to_number(entry):
 def convert_quantity_of(entry):
     quantity_match = QUANTITY_OF_PATTERN.match(entry)
     if quantity_match:
-        number = convert_to_number(quantity_match.group(1))
+        number = convert_to_number(quantity_match.group(1))[0]
         feature = quantity_match.group(2)
         return number, feature
     return None
@@ -52,7 +52,7 @@ def convert_quantity_of(entry):
 def convert_fraction(entry):
     fraction_match = FRACTION_PATTERN.match(entry)
     if fraction_match:
-        number = convert_to_number(fraction_match.group(1))
+        number = convert_to_number(fraction_match.group(1))[0]
         feature = fraction_match.group(2) + "/" + fraction_match.group(4)
         return number, feature
     return None

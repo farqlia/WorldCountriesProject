@@ -160,13 +160,14 @@ test_case_4_2 = '''
 
 class TestDestructureParagraph:
 
-    @pytest.mark.parametrize("html,expected",
-                             [(to_list(test_case_4_2), ["$743.232 million (2020 est.)",
-                                               "-$523.837 million (2019 est.)",
-                                               "-$664.797 million (2018 est.)"]),
-                              (to_list(test_case_4_1), ["7.8% of GDP (2020)"])])
-    def test_for_valid_cases(self, html, expected):
-        assert expected == destructuring.destructure_text_paragraph(html)
+    @pytest.mark.parametrize("html,fieldnames,expected",
+                             [(to_list(test_case_4_2), ["rate_1", "rate_2", "rate_3"],
+                                        {"rate_1": "$743.232 million (2020 est.)",
+                                          "rate_2": "-$523.837 million (2019 est.)",
+                                          "rate_3": "-$664.797 million (2018 est.)"}),
+                              (to_list(test_case_4_1), ["perc"], {"perc": "7.8% of GDP (2020)"})])
+    def test_for_valid_cases(self, html, fieldnames, expected):
+        assert expected == destructuring.destructure_text_paragraph(html, field_names=fieldnames)
 
 
 @pytest.mark.parametrize("paragraph",

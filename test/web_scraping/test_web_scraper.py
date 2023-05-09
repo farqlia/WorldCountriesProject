@@ -100,6 +100,10 @@ def test_get_true_countries():
     print(len(web_scraper.get_all_countries()))
     print(web_scraper.get_all_countries())
 
+def test_all_countries():
+    assert 'Afghanistan' in web_scraper.get_all_countries()
+    assert 'Estonia' in web_scraper.get_all_countries()
+    assert "European Union" not in web_scraper.get_all_countries()
 
 # Not a real tests
 def test_filter_out_differing_countries(countries):

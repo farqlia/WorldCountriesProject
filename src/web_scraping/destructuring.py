@@ -54,5 +54,5 @@ def destructure_list_like_with_text(html_fragments):
     return mapping
 
 
-def destructure_text_paragraph(html_fragments):
-    return list(html_fragments)
+def destructure_text_paragraph(html_fragments, field_names=("rate", )):
+    return {k: fragment for k, fragment in zip(field_names, list(html_fragments))}
