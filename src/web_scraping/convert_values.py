@@ -12,6 +12,8 @@ FRACTION_PATTERN = re.compile("(.*)\s(.*?)/([\d,]+)?\s?([\s\w]+\w)")
 
 
 def convert_or_get_nan(conversion_function, *args):
+    if not args[0]:
+        return [np.NAN]
     result = conversion_function(*args)
     if not result:
         result = [np.NAN]

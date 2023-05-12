@@ -13,7 +13,7 @@ def get_key(header):
 
 def get_key_value(entry):
     key_value_pair = LIST_ENTRY_PATTERN.match(entry)
-    return key_value_pair.group(1), key_value_pair.group(2) if key_value_pair else (None, None)
+    return key_value_pair.group(1), key_value_pair.group(2) if key_value_pair is not None else (None, None)
 
 
 def destructure_list_like(html_fragments):
@@ -28,23 +28,18 @@ def destructure_list_like(html_fragments):
     return mapping
 
 
+# TODO : this could be a recursive function
 def destructure_nested_lists(html_fragments):
     mapping = {}
-    inner_mapping = {}
     current_key = None
     for fragment in html_fragments:
         outer_key = get_key(fragment)
-        if outer_key and inner_mapping:
-            mapping[current_key] = inner_mapping
-            inner_mapping = {}
-            current_key = outer_key
-        elif outer_key:
+        if outer_key:
             current_key = outer_key
         else:
             key, value = get_key_value(fragment)
-            inner_mapping[key] = value
+            mapping[current_key + "_" + key] = value
 
-    mapping[current_key] = inner_mapping
     return mapping
 
 

@@ -1,8 +1,11 @@
 import abc
+import csv
 
 import numpy as np
+from typing import Dict
+from functools import partial
 
-from src.web_scraping.web_scraper import CountrySample, get_all_countries
+from src.web_scraping.web_scraper import get_all_countries
 import src.web_scraping.convert_values as convert_values
 from typing import List
 import pandas as pd
@@ -15,19 +18,20 @@ def create_empty_df(columns, dtype=float):
     return df
 
 
-class CountryMetric:
+def parametrize_csv_saving(destructure_method, conversion_function):
 
-    def __init__(self, destructure_method, conversion_function, fields: List[str]):
-        self.destructure_method = destructure_method
-        self.conversion_function = conversion_function
-        self.fields = fields
+    def save(path, fields: List[str], country_samples, *args, **kwargs):
 
-    def get_metric_df(self, country_samples: List[CountrySample]):
+        fieldnames = ['country'] + fields
+        with open(path, 'w', newline='') as file:
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writeheader()
+            for country in get_all_countries():
+                rates = destructure_method(country_samples[country], *args, **kwargs) if country in country_samples else {}
+                converted_fields = {var: convert_values.convert_or_get_nan(conversion_function,
+                                                                           rates.get(var, []))[0] for var in fields}
+                converted_fields.update({'country': country})
+                writer.writerow(converted_fields)
 
-        df = create_empty_df(self.fields)
-        for sample in country_samples:
-            rates = self.destructure_method(sample.paragraph_content)
-            for field in self.fields:
-                df.loc[sample.country, field] = convert_values.convert_or_get_nan(self.conversion_function, rates[field])[0]
+    return save
 
-        return df

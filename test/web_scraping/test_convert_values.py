@@ -80,7 +80,10 @@ class TestConvertOrGetNone:
 
     @pytest.mark.parametrize("func,arg", [(convert_values.convert_to_number, "NA"),
                                       (convert_values.convert_quantity_of, "NA"),
-                                      (convert_values.convert_fraction, "NA")])
+                                      (convert_values.convert_fraction, "NA"),
+                                          (convert_values.convert_to_number, []),
+                                          (convert_values.convert_fraction, []),
+                                          (convert_values.convert_quantity_of, [])])
     def test_result_is_none(self, func, arg):
         assert convert_values.convert_or_get_nan(func, arg) == [np.NAN]
 

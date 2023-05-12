@@ -101,7 +101,7 @@ class TestDestructureListLikeParagraphWithCaption:
         assert expected == destructuring.destructure_list_like_with_text(to_list(test_case_2))
 
 
-test_case_3 = '''
+test_case_3_1 = '''
 <p>
 <strong>improved: </strong>
     urban: 79% of population
@@ -124,19 +124,46 @@ test_case_3 = '''
 </p>
 '''
 
+test_case_3_2 = '''
+<p>
+<strong>improved: </strong>
+    urban: 79% of population
+    <br>
+    <br>
+    rural: 70.8% of population
+    <br>
+    <br>
+    total: 74.7% of population
+    <br>
+    <br>
+<strong>unimproved: </strong>
+    urban: 21% of population
+    <br>
+    <br>
+    rural: 29.2% of population
+    <br>
+    <br>
+    total: 25.3% of population (2020 est.)
+<strong>note: </strong>
+    does not include data from the former Western Sahara
+</p>
+'''
 
 class TestDestructureNestedList:
 
     # This will not be probably different from the first case
     def test_for_valid_case(self):
-        expected = {'improved': {'urban': '79% of population',
-                                 'rural': '70.8% of population',
-                                 'total': '74.7% of population'},
-                    'unimproved': {'urban': '21% of population',
-                                   'rural': '29.2% of population',
-                                   'total': '25.3% of population (2020 est.)'}
+        expected = {'improved_urban': '79% of population',
+                                 'improved_rural': '70.8% of population',
+                                 'improved_total': '74.7% of population', 'unimproved_urban': '21% of population',
+                                   'unimproved_rural': '29.2% of population',
+                                   'unimproved_total': '25.3% of population (2020 est.)'
                     }
-        assert expected == destructuring.destructure_nested_lists(to_list(test_case_3))
+        assert expected == destructuring.destructure_nested_lists(to_list(test_case_3_1))
+
+    def test_with_note_entry(self):
+        assert 'note' in destructuring.destructure_nested_lists(to_list(test_case_3_2))
+
 
 
 test_case_4_1 = '''
@@ -172,7 +199,7 @@ class TestDestructureParagraph:
 
 @pytest.mark.parametrize("paragraph",
                          [test_case_1_1, test_case_1_2,
-                          test_case_2, test_case_3, test_case_4_1,
+                          test_case_2, test_case_3_1, test_case_4_1,
                           test_case_4_2])
 def test_print_each_stripped(paragraph):
     soup = bs4.BeautifulSoup(paragraph)
@@ -180,3 +207,10 @@ def test_print_each_stripped(paragraph):
     print()
     for fragment in html_fragments:
         print(fragment, end="|\n")
+
+
+def test_key_value_conversion():
+    arg = "urban: 97.3% of population"
+    key, value = destructuring.get_key_value(arg)
+    assert key == "urban"
+    assert value == "97.3% of population"
