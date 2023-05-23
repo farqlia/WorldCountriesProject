@@ -12,6 +12,7 @@ from src.global_vars import DATA_PATH
 
 # TODO : change path to where files are saved
 
+
 def open_from_csv(metric):
     return pd.read_csv(DATA_PATH / f"{metric}.csv").set_index('country')
 

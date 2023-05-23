@@ -14,7 +14,7 @@ class Downloader:
         self.url_formatter = StringFormatter.from_base("https://www.cia.gov/the-world-factbook")
         self.url_formatter = self.url_formatter.append("field/{field}/")
 
-    def download(self, field):
+    def download(self, field: str):
         field = field.replace(r' ', '-')
         response = requests.get(self.url_formatter.put_params(field=field))
         if response:

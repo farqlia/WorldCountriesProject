@@ -39,6 +39,7 @@ test_case_1_2 = '''
 </p>
 '''
 
+
 def to_list(html):
     soup = bs4.BeautifulSoup(html)
     return soup.stripped_strings

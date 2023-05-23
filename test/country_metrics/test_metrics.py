@@ -17,28 +17,25 @@ class TestCountryMetricToCSV:
 
     @pytest.fixture()
     def get_arg(self):
-        return {
-                        "Angola":
+        return {"Angola":
                         ["total:", "57.2 deaths/1,000 live births",
                          "male:", "62.37 deaths/1,000 live births",
-                         "female:", "51.87 deaths/1,000 live births (2023 est.)"]
-        ,
-                         "Anguilla":
+                         "female:", "51.87 deaths/1,000 live births (2023 est.)"],
+                "Anguilla":
                          ["total:", "3.02 deaths/1,000 live births",
                           "male:", "3.94 deaths/1,000 live births",
                           "female:", "2.08 deaths/1,000 live births (2023 est.)"]
-                     }
+                }
 
     @pytest.fixture()
     def get_expected(self):
         return pd.DataFrame(data=[[57.2, 62.37, 51.87], [3.02, 3.94, 2.08]],
-                     index=['Angola', 'Anguilla'],
-                     columns=["total", "male", "female"])
+                            index=['Angola', 'Anguilla'],
+                            columns=["total", "male", "female"])
 
     def test_save_to_csv_and_retrieve(self, get_arg, file_path, get_expected):
         birth_rates_metric = metrics.parametrize_csv_saving(destructuring.destructure_list_like,
-                                                        convert_values.convert_fraction
-                                                        )
+                                                            convert_values.convert_fraction)
         birth_rates_metric(file_path, ['total', 'male', 'female'], get_arg)
         actual = pd.read_csv(file_path)
         actual = actual.set_index('country')

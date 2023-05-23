@@ -1,4 +1,6 @@
 import re
+from typing import Iterator
+
 HEADER_PATTERN = re.compile("(.+?):$")
 LIST_ENTRY_PATTERN = re.compile("(.+?): (.+)")
 
@@ -16,7 +18,7 @@ def get_key_value(entry):
     return key_value_pair.group(1), key_value_pair.group(2) if key_value_pair is not None else (None, None)
 
 
-def destructure_list_like(html_fragments):
+def destructure_list_like(html_fragments: Iterator[str]):
     mapping = {}
     i = 0
     for element in html_fragments:
@@ -29,7 +31,7 @@ def destructure_list_like(html_fragments):
 
 
 # TODO : this could be a recursive function
-def destructure_nested_lists(html_fragments):
+def destructure_nested_lists(html_fragments: Iterator[str]):
     mapping = {}
     current_key = None
     for fragment in html_fragments:
@@ -43,11 +45,11 @@ def destructure_nested_lists(html_fragments):
     return mapping
 
 
-def destructure_list_like_with_text(html_fragments):
+def destructure_list_like_with_text(html_fragments: Iterator[str]):
     mapping = {'caption': next(html_fragments)}
     mapping.update(destructure_list_like(html_fragments))
     return mapping
 
 
-def destructure_text_paragraph(html_fragments, field_names=("rate", )):
-    return {k: fragment for k, fragment in zip(field_names, list(html_fragments))}
+def destructure_text_paragraph(html_fragments: Iterator[str], field_names=("rate", )):
+    return {k: fragment for k, fragment in zip(field_names, html_fragments)}

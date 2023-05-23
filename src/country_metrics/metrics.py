@@ -20,18 +20,18 @@ def create_empty_df(columns, dtype=float):
 
 def parametrize_csv_saving(destructure_method, conversion_function):
 
-    def save(path, fields: List[str], country_samples, *args, **kwargs):
+    def save_to_csv(path, fields: List[str], country_samples, *args, **kwargs):
 
         fieldnames = ['country'] + fields
         with open(path, 'w', newline='') as file:
             writer = csv.DictWriter(file, fieldnames=fieldnames)
             writer.writeheader()
             for country in get_all_countries():
-                rates = destructure_method(country_samples[country], *args, **kwargs) if country in country_samples else {}
-                converted_fields = {var: convert_values.convert_or_get_nan(conversion_function,
-                                                                           rates.get(var, []))[0] for var in fields}
+                values = destructure_method(country_samples[country], *args, **kwargs) if country in country_samples else {}
+                converted_fields = {var: convert_values.convert_or_return_nan(conversion_function,
+                                                                              values.get(var, "")) for var in fields}
                 converted_fields.update({'country': country})
                 writer.writerow(converted_fields)
 
-    return save
+    return save_to_csv
 

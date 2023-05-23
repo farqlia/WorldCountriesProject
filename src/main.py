@@ -31,15 +31,16 @@ metrics = [
     'population below poverty line',
     'school life expectancy primary to tertiary education',
     'sex ratio', 'tobacco use', 'total fertility rate',
-    'unemployment rate', 'current health expenditure'
+    'unemployment rate', 'current health expenditure', 'location'
 ]
 
 # TODO: solve with 'drinking water source'
-# download_metrics([m.replace('_', ' ') for m in metrics])
-download_metrics(['current health expenditure'])
-print("[")
-print(", ".join("'" + m.replace('_', ' ') + "'" for m in metrics))
-print("]")
+download_metrics([m.replace('_', ' ') for m in metrics])
+print("Done")
+# download_metrics()
+# print("[")
+# print(", ".join("'" + m.replace('_', ' ') + "'" for m in metrics))
+# print("]")
 # assert_all_are_downloaded(metrics)
 
-print("done")
+# print("done")

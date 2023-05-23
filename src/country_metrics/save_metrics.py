@@ -193,3 +193,8 @@ def save_current_health_expenditure(country_samples):
 def save_median_age(country_samples):
     save_ll_with_numbers(get_path("median_age"),
                          ['total', 'male', 'female'], country_samples)
+
+
+def save_location(country_samples):
+    save_text(conversion_function=convert_values.extract_location)(get_path("location"),
+                                                                   ['location'], country_samples, ['location'])

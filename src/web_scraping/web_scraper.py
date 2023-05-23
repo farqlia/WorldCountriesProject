@@ -3,7 +3,7 @@ import bs4
 from src.global_vars import DATA_PATH
 
 
-def retrieve_paragraph_contents(http_response_content):
+def retrieve_paragraph_contents(http_response_content: bytes):
     soup = bs4.BeautifulSoup(http_response_content, 'html.parser')
     list_of_countries_data = soup.body.find('main', attrs={'id': 'main-content'}).find('ul').find_all('li')
     country_paragraphs = {}
@@ -15,6 +15,7 @@ def retrieve_paragraph_contents(http_response_content):
     return country_paragraphs
 
 
+# TODO: Prepare better list of all countries
 def retrieve_countries(html):
     country_paragraphs = retrieve_paragraph_contents(html)
     countries = [row.country for row in country_paragraphs]
