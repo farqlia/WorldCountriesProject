@@ -1,4 +1,4 @@
-from src.web_scraping.downloading import download_metrics, assert_all_are_downloaded
+from src.web_scraping.downloading_metrics import download_metrics, assert_all_are_downloaded
 
 metrics = ['infant mortality rate', 'population growth rate',
             'age structure', 'birth rate', 'net migration rate',
@@ -35,7 +35,10 @@ metrics = [
 ]
 
 # TODO: solve with 'drinking water source'
-download_metrics([m.replace('_', ' ') for m in metrics])
+
+# download_metrics([m.replace('_', ' ') for m in metrics])
+
+download_metrics(['drinking water source'])
 print("Done")
 # download_metrics()
 # print("[")

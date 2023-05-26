@@ -1,9 +1,12 @@
-from src.country_metrics.metrics import parametrize_csv_saving
-import src.web_scraping.destructuring as destructuring
-import src.web_scraping.convert_values as convert_values
+import csv
+
+from src.country_metrics.save_to_csv import parametrize_csv_saving
+import src.web_scraping.destructuring_functions as destructuring
+import src.web_scraping.conversion_functions as convert_values
 from typing import List
+from numpy import repeat, c_, array
 from functools import partial
-from src.global_vars import DATA_PATH
+from src.global_vars import DATA_PATH, COUNTRIES_PATH
 
 save_list_like = partial(parametrize_csv_saving,
                          destructure_method=destructuring.destructure_list_like)
@@ -18,11 +21,26 @@ save_text = partial(parametrize_csv_saving,
 save_txt_with_numbers = save_text(conversion_function=convert_values.convert_to_number)
 save_txt_with_fraction = save_text(conversion_function=convert_values.convert_fraction)
 save_txt_with_quantity = save_text(conversion_function=convert_values.convert_quantity_of)
+save_txt_only_header = save_text(conversion_function=convert_values.extract_header)
 
 save_nested_list_like = partial(parametrize_csv_saving,
                                 destructure_method=destructuring.destructure_nested_lists)
 
 save_nll_with_quantity = save_nested_list_like(conversion_function=convert_values.convert_quantity_of)
+
+
+# This will be used to save country names
+# The slight problem here is that some countries belong to more than one continent,
+# so the index for dataframe might not be unique
+def save_geographic_overview(country_samples):
+    countries_on_continents = list(country_samples['World'])[9:15]
+    with open(COUNTRIES_PATH, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(['country', 'continent'])
+        for p in countries_on_continents:
+            continent, countries = convert_values.get_continent_and_countries(p)
+            rows = c_[array(countries), repeat(continent, repeats=len(countries))]
+            writer.writerows(list(rows))
 
 
 def get_path(name):
@@ -113,7 +131,8 @@ def save_gini_index_coefficient_distribution_of_family_income(country_samples):
 
 
 # How to get HIV.AIDS
-
+# With this metric, if there is only industry and services available, then
+# place it as industry
 def save_labor_force_by_occupation(country_samples):
     save_ll_with_numbers(get_path("labor_force_by_occupation"),
                          ['agriculture', 'industry', 'services',
@@ -198,3 +217,13 @@ def save_median_age(country_samples):
 def save_location(country_samples):
     save_text(conversion_function=convert_values.extract_location)(get_path("location"),
                                                                    ['location'], country_samples, ['location'])
+
+
+def save_food_insecurity(country_samples):
+    save_txt_only_header(get_path("food_insecurity"),
+                       ['food insecurity'], country_samples, field_names=['food insecurity'])
+
+
+def save_population(country_samples):
+    save_txt_with_numbers(get_path("population"),
+                          ['population'], country_samples, field_names=['population'])

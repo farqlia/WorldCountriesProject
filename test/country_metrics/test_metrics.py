@@ -2,8 +2,8 @@ import pandas as pd
 
 import src.country_metrics.metrics as metrics
 import src.web_scraping.web_scraper as web_scraper
-import src.web_scraping.destructuring as destructuring
-import src.web_scraping.convert_values as convert_values
+import src.web_scraping.destructuring_functions as destructuring
+import src.web_scraping.conversion_functions as convert_values
 import pytest
 import pandas.testing as pd_test
 

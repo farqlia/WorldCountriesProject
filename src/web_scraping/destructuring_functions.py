@@ -10,12 +10,14 @@ LIST_ENTRY_PATTERN = re.compile("(.+?): (.+)")
 
 def get_key(header):
     key = HEADER_PATTERN.match(header)
-    return key.group(1) if key else None
+    return key.group(1) if key else ""
 
 
 def get_key_value(entry):
     key_value_pair = LIST_ENTRY_PATTERN.match(entry)
-    return key_value_pair.group(1), key_value_pair.group(2) if key_value_pair is not None else (None, None)
+    if key_value_pair is not None:
+        return key_value_pair.group(1), key_value_pair.group(2)
+    return "", ""
 
 
 def destructure_list_like(html_fragments: Iterator[str]):
@@ -53,3 +55,5 @@ def destructure_list_like_with_text(html_fragments: Iterator[str]):
 
 def destructure_text_paragraph(html_fragments: Iterator[str], field_names=("rate", )):
     return {k: fragment for k, fragment in zip(field_names, html_fragments)}
+
+

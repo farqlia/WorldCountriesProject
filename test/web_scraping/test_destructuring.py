@@ -1,7 +1,7 @@
 import bs4
 import pytest
 
-import src.web_scraping.destructuring as destructuring
+import src.web_scraping.destructuring_functions as destructuring
 
 test_case_1_1 = '''
     <p>
@@ -141,7 +141,7 @@ test_case_3_2 = '''
     urban: 21% of population
     <br>
     <br>
-    rural: 29.2% of population
+    rural: 0% of population
     <br>
     <br>
     total: 25.3% of population (2020 est.)
@@ -157,7 +157,7 @@ class TestDestructureNestedList:
         expected = {'improved_urban': '79% of population',
                                  'improved_rural': '70.8% of population',
                                  'improved_total': '74.7% of population', 'unimproved_urban': '21% of population',
-                                   'unimproved_rural': '29.2% of population',
+                                   'unimproved_rural': '0% of population',
                                    'unimproved_total': '25.3% of population (2020 est.)'
                     }
         assert expected == destructuring.destructure_nested_lists(to_list(test_case_3_1))

@@ -4,19 +4,22 @@ import re
 import numpy as np
 
 from src.logging_errors.logging_setup import log_on_none
+from src.web_scraping.destructuring_functions import HEADER_PATTERN
 
 NUMER_PATTERN = re.compile(r"-?\$?([\d,.]+)%?\s*(million|billion)?")
 ten_powers = {'million': 1_000_000, 'billion': 1_000_000_000}
 QUANTITY_OF_PATTERN = re.compile(r"(.*?) of ([\w\s]+\w)")
-FRACTION_PATTERN = re.compile("(.*)\s(.*?)/([\d,]+)?\s?([\s\w]+\w)")
+FRACTION_PATTERN = re.compile(r"(.*)\s(.*?)/([\d,]+)?\s?([\s\w]+\w)")
 REGION_PATTERN = re.compile("(Africa|North America|Caribbean|South America|Asia|Europe|Middle East|Oceania)")
+CONTINENT_PATTERN = re.compile(r"(?P<continent>[\w\s]+) \(\d+\)")
+COUNTRIES_PATTERN = re.compile(r"\w[\w\s-]+\w")
 
 
 def convert_or_return_nan(conversion_function, *args):
     if not args[0]:
         return np.NAN
     result = conversion_function(*args)
-    if not result:
+    if result is None:
         result = np.NAN
     return result
 
@@ -62,3 +65,17 @@ def convert_fraction(entry: str):
 def extract_location(entry: str):
     location_match = REGION_PATTERN.search(entry)
     return location_match.group(1) if location_match else None
+
+
+def get_continent_and_countries(paragraph):
+    split_on_colon = paragraph.split(":")
+    continent = CONTINENT_PATTERN.match(split_on_colon[0]).group('continent')
+    countries = list(map(lambda c: c.group(), filter(lambda c: c is not None,
+                            map(lambda s: COUNTRIES_PATTERN.search(s),
+                                split_on_colon[1].split(',')))))
+    return continent.strip(), countries
+
+
+def extract_header(entry: str):
+    header_match = re.search(HEADER_PATTERN, entry)
+    return header_match.group(1) if header_match else None

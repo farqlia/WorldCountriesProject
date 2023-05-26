@@ -74,11 +74,51 @@ def test_for_correct_retrieving_paragraph_content_from_webpage():
     ]
 
 
+class TestHasLinkTag:
+
+    def test_for_has_link_tag(self):
+        samples = '''<li>
+                <h2>
+                    <a href="">Afganistan</a>
+                </h2><p>Some text</p></li>'''
+        assert web_scraper.has_link_tag(bs4.BeautifulSoup(samples))
+
+    def test_for_doesnt_have_link_tag(self):
+        samples = '''<li><p>Some text</p></li>'''
+        assert not web_scraper.has_link_tag(bs4.BeautifulSoup(samples))
+
+
+class TestGetCountryName:
+
+    @pytest.mark.parametrize("case,expected", [
+        ("<a>Congo, Democratic Republic of the</a>", "Democratic Republic of the Congo"),
+        ("<a>Congo, Republic of the</a>", "Republic of the Congo"),
+        ("<a>Gambia, The</a>", "The Gambia"),
+        ("<a>Bahamas, The</a>", "The Bahamas"),
+        ("<a>Korea, North</a>", "North Korea"),
+        ("<a>Korea, South</a>", "South Korea"),
+        ("<a>Micronesia, Federated States of</a>", "Federated States of Micronesia")
+    ])
+    def test_edge_cases(self, case, expected):
+        assert web_scraper.get_country_name(bs4.BeautifulSoup(case)) == expected
+
+    @pytest.mark.parametrize("case,expected", [
+        ("<a>Turkey (Turkiye)</a>", "Turkey"),
+        ("<a>Holy See (Vatican City)</a>", "Holy See")
+    ])
+    def test_names_with_parenthesis(self, case, expected):
+        assert web_scraper.get_country_name(bs4.BeautifulSoup(case)) == expected
+
+
 @pytest.fixture()
 def countries():
     response = requests.get("https://www.cia.gov/the-world-factbook/field/death-rate/")
     countries = web_scraper.retrieve_countries(response.content)
     return countries
+
+
+def test_print_all_countries():
+    [print(c) for c in web_scraper.get_all_countries()]
 
 
 def test_for_extracting_countries_names(countries):

@@ -63,7 +63,7 @@ class TestPopulationGrowthRate:
     def samples(self):
         arguments = {
             "Afghanistan": ["2.26% (2023 est.)"],
-        "Estonia": ["-0.74% (2023 est.)"]}
+            "Estonia": ["-0.74% (2023 est.)"]}
         return arguments
 
     def test_get_population_growth_rate(self, samples):
@@ -77,10 +77,34 @@ class TestPopulationGrowthRate:
 
     @pytest.mark.skip("Index is not present")
     @pytest.mark.parametrize("case",
-        [{"European Union": ["(2021 est.) 0.10%"]},
-        {"Cocos (Keeling) Islands": ["NA"]}]
+        [
+            {"European Union": ["(2021 est.) 0.10%"]},
+            {"Cocos (Keeling) Islands": ["NA"]}
+        ]
     )
     def test_malformed_or_none(self, case):
         save_metrics.save_infant_mortality_rate([case])
         df = open_from_csv("population_growth_rate")
         assert not df.loc[case.keys()[0]]
+
+
+class TestSaveFoodInsecurity:
+
+    @pytest.fixture()
+    def samples(self):
+        arguments = {
+            "Iraq": ["severe localized food insecurity:", "due to civil conflict and economic slowdown..."],
+            "Kenya": ["exceptional shortfall in aggregate food production/supplies:", "due to drought conditions..."]
+        }
+        return arguments
+
+    def test_save_metric(self, samples):
+        expected = pd.DataFrame(data=[["severe localized food insecurity"],
+                                      ["exceptional shortfall in aggregate food production/supplies"]],
+                                columns=["food insecurity"],
+                                index=["Iraq", "Kenya"])
+
+        save_metrics.save_food_insecurity(samples)
+        actual = open_from_csv("food_insecurity")
+        pd_test.assert_frame_equal(actual.loc[["Iraq", "Kenya"]],
+                                   expected, check_names=False, check_dtype=False)

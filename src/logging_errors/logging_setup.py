@@ -23,6 +23,8 @@ def log_on_none(logging_level):
 
 
 log_on_none(logging.WARNING)
+
+
 def some_none_func(*args, **kwargs):
     return None
 

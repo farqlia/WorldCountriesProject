@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-import src.web_scraping.convert_values as convert_values
+import src.web_scraping.conversion_functions as convert_values
 
 # Each of these test cases should be converted to values
 # From these also only numbers
@@ -120,3 +120,11 @@ class TestConvertOrGetNone:
         assert convert_values.convert_or_return_nan(func, arg) == expected
 
 
+class TestGetContinentAndCountries:
+
+    def test_on_valid_case(self):
+        paragraph = "Africa (54): Algeria, Angola*, Democratic Republic of the Congo " \
+                    "(* indicates part of the country is also in Asia);"
+        continent, countries = convert_values.get_continent_and_countries(paragraph)
+        assert continent == 'Africa'
+        assert countries == ['Algeria', 'Angola', 'Democratic Republic of the Congo']
