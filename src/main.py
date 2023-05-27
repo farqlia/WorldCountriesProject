@@ -38,7 +38,7 @@ metrics = [
 
 # download_metrics([m.replace('_', ' ') for m in metrics])
 
-download_metrics(['drinking water source'])
+download_metrics(['infant mortality rate'])
 print("Done")
 # download_metrics()
 # print("[")

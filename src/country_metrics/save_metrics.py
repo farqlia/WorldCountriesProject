@@ -48,7 +48,7 @@ def get_path(name):
 
 
 def save_infant_mortality_rate(country_samples):
-    save_ll_with_numbers(get_path("country_mortality_rate"),
+    save_ll_with_numbers(get_path("infant_mortality_rate"),
                          ['total', 'male', 'female'],
                          country_samples)
 

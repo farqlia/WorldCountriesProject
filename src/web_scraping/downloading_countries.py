@@ -9,4 +9,5 @@ def get_all_countries():
         reader = csv.reader(f, delimiter=',')
         next(reader)
         world_countries = [row[0] for row in reader]
+        world_countries.remove('South Africa')
         return sorted(list(set(world_countries)))
