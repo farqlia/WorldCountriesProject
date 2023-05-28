@@ -8,6 +8,30 @@ from pathlib import Path
 from src.global_vars import DATA_PATH
 
 
+CATEGORICAL_METRICS = [
+     'geographic overview', 'food insecurity'
+]
+
+NUMERICAL_METRICS = ['infant mortality rate', 'population growth rate',
+    'age structure', 'birth rate', 'net migration rate',
+    'alcohol consumption per capita', 'child marriage',
+    'contraceptive prevalence rate',
+    'currently married women ages 15 49', 'death rate',
+    'education expenditures', 'gdp official exchange rate',
+    'gini index coefficient distribution of family income',
+    'labor force by occupation', 'life expectancy at birth',
+    'literacy', 'maternal mortality ratio',
+    'mothers mean age at first birth',
+    'obesity adult prevalence rate', 'physicians density',
+    'population below poverty line',
+    'school life expectancy primary to tertiary education',
+    'sex ratio', 'tobacco use', 'total fertility rate',
+    'unemployment rate', 'current health expenditure', 'median age', 'dependency ratios',
+    'drinking water source', 'population', 'labor force by occupation',
+    'budget surplus or deficit', 'energy consumption per capita',
+    'gdp composition by end use', 'industrial production growth rate',
+     'taxes and other revenues', 'internet users']
+
 class Downloader:
 
     def __init__(self):

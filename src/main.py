@@ -31,14 +31,17 @@ metrics = [
     'population below poverty line',
     'school life expectancy primary to tertiary education',
     'sex ratio', 'tobacco use', 'total fertility rate',
-    'unemployment rate', 'current health expenditure', 'location'
+    'unemployment rate', 'current health expenditure', 'location',
+    'budget surplus or deficit', 'energy consumption per capita',
+    'gdp composition by end use', 'industrial production growth rate',
+    'taxes and other revenues', 'internet users'
 ]
 
 # TODO: solve with 'drinking water source'
 
 # download_metrics([m.replace('_', ' ') for m in metrics])
 
-download_metrics(['infant mortality rate'])
+download_metrics(['geographic overview'])
 print("Done")
 # download_metrics()
 # print("[")

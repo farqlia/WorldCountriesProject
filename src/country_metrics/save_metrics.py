@@ -34,7 +34,7 @@ save_nll_with_quantity = save_nested_list_like(conversion_function=convert_value
 # so the index for dataframe might not be unique
 def save_geographic_overview(country_samples):
     countries_on_continents = list(country_samples['World'])[9:15]
-    with open(COUNTRIES_PATH, 'w', newline='') as f:
+    with open(get_path('geographic_overview'), 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(['country', 'continent'])
         for p in countries_on_continents:
@@ -227,3 +227,34 @@ def save_food_insecurity(country_samples):
 def save_population(country_samples):
     save_txt_with_numbers(get_path("population"),
                           ['population'], country_samples, field_names=['population'])
+
+
+def save_budget_surplus_or_deficit(country_samples):
+    save_txt_with_numbers(get_path('budget_surplus_or_deficit'),
+                           ['percentage of GDP'], country_samples, field_names=['percentage of GDP'])
+
+def save_energy_consumption_per_capita(country_samples):
+    save_txt_with_fraction(get_path('energy_consumption_per_capita'),
+                           ['consumption per person'], country_samples, field_names=['consumption per person'])
+
+
+def save_gdp_composition_by_end_use(country_samples):
+    save_ll_with_numbers(get_path('gdp_composition_by_end_use'),
+                         ['household consumption', 'government consumption',
+                          'investment in fixed capital', 'investment in inventories',
+                          'exports of goods and services', 'imports of goods and services'],
+                         country_samples)
+
+def save_industrial_production_growth_rate(country_samples):
+    save_txt_with_numbers(get_path('industrial_production_growth_rate'),
+                          ['rate'], country_samples)
+
+
+def save_taxes_and_other_revenues(country_samples):
+    save_txt_with_numbers(get_path('taxes_and_other_revenues'),
+                          ['rate'], country_samples)
+
+
+def save_internet_users(country_samples):
+    save_ll_with_numbers(get_path("internet_users"),
+                         ['total', 'percent of population'], country_samples)
