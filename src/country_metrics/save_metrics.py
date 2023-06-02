@@ -47,6 +47,10 @@ def get_path(name):
     return DATA_PATH.joinpath(name + ".csv")
 
 
+def save_real_gdp_per_capita(country_samples):
+    save_txt_with_numbers(get_path('real_gdp_per_capita'), 
+                          ['gdp per capita'], country_samples, field_names=['gdp per capita'])
+
 def save_infant_mortality_rate(country_samples):
     save_ll_with_numbers(get_path("infant_mortality_rate"),
                          ['total', 'male', 'female'],

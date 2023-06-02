@@ -30,7 +30,8 @@ NUMERICAL_METRICS = ['infant mortality rate', 'population growth rate',
     'drinking water source', 'population', 'labor force by occupation',
     'budget surplus or deficit', 'energy consumption per capita',
     'gdp composition by end use', 'industrial production growth rate',
-     'taxes and other revenues', 'internet users']
+     'taxes and other revenues', 'internet users', 'real gdp per capita']
+
 
 class Downloader:
 
@@ -50,7 +51,7 @@ class Downloader:
 
 
 def open_metric(metric: str):
-    return pd.read_csv(DATA_PATH / (metric.replace(" ", "_") + ".csv")).set_index("country")
+    return pd.read_csv(DATA_PATH / (metric.replace(" ", "_") + ".csv"), na_values='nan').set_index("country")
 
 
 def download_metrics(metrics: List[str]):

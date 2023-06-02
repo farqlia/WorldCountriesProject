@@ -10,6 +10,8 @@ def test_assign_continents():
     assert continents.loc['Kazakhstan', 'continent'] == 'Asia'
     assert continents.loc['Czechia', 'continent'] == 'Europe'
 
+def test_get_continents():
+    print(utils.get_continents())
 
 class TestComputeDependencyMatrix:
 
