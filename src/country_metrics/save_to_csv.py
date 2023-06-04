@@ -1,11 +1,13 @@
 import abc
 import csv
 
-from src.web_scraping.downloading_countries import get_all_countries
+from src.web_scraping.save_countries import get_all_countries, save_countries
 import src.web_scraping.conversion_functions as convert_values
 from typing import List
+from src.global_vars import DATA_PATH
 
-COUNTRIES = get_all_countries()
+if DATA_PATH.exists():
+    COUNTRIES = get_all_countries()
 
 
 def parametrize_csv_saving(destructure_method, conversion_function):

@@ -32,7 +32,6 @@ def destructure_list_like(html_fragments: Iterator[str]):
     return mapping
 
 
-# TODO : this could be a recursive function
 def destructure_nested_lists(html_fragments: Iterator[str]):
     mapping = {}
     current_key = None

@@ -1,4 +1,4 @@
-from src.web_scraping.downloading_countries import save_countries, get_all_countries
+from src.web_scraping.save_countries import save_countries, get_all_countries
 
 
 def test_save_countries():

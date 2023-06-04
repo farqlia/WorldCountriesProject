@@ -5,35 +5,6 @@ from src.data_preprocessing.utils import get_continents
 import seaborn as sns
 import pandas as pd
 
-def cut_names(df):
-    values = df.index.values
-    return [val[:20] for val in values]
-
-
-# Annotate Median Age for each country
-def plot_age_structure(age_structure_df, index_order):
-    n_countries = len(index_order)
-    age_structure_df = age_structure_df.loc[index_order]
-    n_cols_per_plot = 4
-    n_countries_per_row = 12
-
-    n_rows = n_countries // n_countries_per_row
-    n_cols = 3
-    i = 1
-    for row in range(0, n_rows):
-        for col in range(0, n_cols):
-            plt.subplot(n_rows, n_cols, i)
-            i += 1
-            curr_rows = age_structure_df.iloc[row * n_countries_per_row + col * n_cols_per_plot:
-                                              min(n_countries, row * n_countries_per_row + (col + 1) * n_cols_per_plot)]
-            spc = np.arange(len(curr_rows))
-            plt.bar(spc, curr_rows['0-14 years'], width=0.3, label='0-14 years', edgecolor='k')
-            plt.bar(spc + 0.3, curr_rows['15-64 years'], width=0.3, label='15-64 years', edgecolor='k')
-            plt.bar(spc + 0.6, curr_rows['65 years and over'], width=0.3, label='65 years and over', edgecolor='k')
-            plt.xticks(spc + 0.45 / 2, cut_names(curr_rows))
-        plt.legend(bbox_to_anchor=(1.25, 0.6), loc='center right')
-
-
 def plot_x_vs_y(x_series, y_series, x_name, y_name, ax, color='#f653a6', yscale=None):
     ax.scatter(x=x_series, y=y_series, color=color, alpha=0.7)
     ax.set_title(f"{x_name.capitalize()} VS {y_name.capitalize()}")
@@ -153,20 +124,4 @@ def create_scatter_plots(median_age_series, countries_data_df, metrics_to_plot,
                     color=c1(vals[i]), alpha=0.7, ax=ax)
         if metrics_to_plot[i] in log_scales:
             ax.set_xscale('log')
-
-
-def plot_by_continent(x_series, y_series, continents_series, x_name, y_name):
-
-    continents = get_continents()
-    _, axes = plt.subplots(2, (len(continents) + 1) // 2, 
-                           figsize=(20, 12))
-    axes = axes.flatten() 
-
-    cmap = colormaps['winter'](np.linspace(0, 1, len(continents)))[:, :3]
-
-    for i, continent in enumerate(continents):
-        idx = np.flatnonzero(continents_series == continent)
-        plot_x_vs_y(x_series[idx], y_series[idx], x_name, y_name, axes[i],
-                    color=cmap[i])
-        axes[i].set_title(continent)
 

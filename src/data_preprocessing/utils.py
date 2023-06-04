@@ -114,19 +114,6 @@ def merge_metrics(index):
     return countries_data
 
 
-# Returns tuple of metric result and type
-# Checks for pearson correlation, spearmanr, logarythmic
-# Only its upper left triangle is filled
-def compute_dependency_matrix(country_metrics, dependency_fun):
-    n = len(country_metrics.columns)
-    matrix = np.zeros(shape=(n, n))
-    for i in range(n):
-        for j in range(i, n):
-            matrix[i, j] = dependency_fun(country_metrics.iloc[:, i], country_metrics.iloc[:, j])[0]
-
-    return matrix
-
-
 # Returns dropped columns
 def drop_columns_with_percent_of_nulls(country_metrics, percentage=0.5):
     n_countries = len(country_metrics)
@@ -135,8 +122,3 @@ def drop_columns_with_percent_of_nulls(country_metrics, percentage=0.5):
     country_metrics.drop(columns_to_drop, inplace=True, axis=1)
     return columns_to_drop
 
-
-
-if __name__ == "__main__":
-    print(get_location_df())
-    countries_data = merge_metrics()

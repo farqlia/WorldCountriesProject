@@ -3,10 +3,9 @@ import csv
 from src.country_metrics.save_to_csv import parametrize_csv_saving
 import src.web_scraping.destructuring_functions as destructuring
 import src.web_scraping.conversion_functions as convert_values
-from typing import List
 from numpy import repeat, c_, array
 from functools import partial
-from src.global_vars import DATA_PATH, COUNTRIES_PATH
+from src.global_vars import DATA_PATH
 
 save_list_like = partial(parametrize_csv_saving,
                          destructure_method=destructuring.destructure_list_like)
@@ -34,7 +33,7 @@ save_nll_with_quantity = save_nested_list_like(conversion_function=convert_value
 # so the index for dataframe might not be unique
 def save_geographic_overview(country_samples):
     countries_on_continents = list(country_samples['World'])[9:15]
-    with open(get_path('geographic_overview'), 'w', newline='') as f:
+    with open(DATA_PATH / 'geographic_overview.csv', 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(['country', 'continent'])
         for p in countries_on_continents:
@@ -50,6 +49,7 @@ def get_path(name):
 def save_real_gdp_per_capita(country_samples):
     save_txt_with_numbers(get_path('real_gdp_per_capita'), 
                           ['gdp per capita'], country_samples, field_names=['gdp per capita'])
+
 
 def save_infant_mortality_rate(country_samples):
     save_ll_with_numbers(get_path("infant_mortality_rate"),
