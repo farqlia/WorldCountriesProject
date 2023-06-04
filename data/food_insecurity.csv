@@ -1,5 +1,5 @@
 country,food insecurity
-Afghanistan,severe localized food insecurity
+Afghanistan,nan
 Albania,nan
 Algeria,nan
 Andorra,nan
@@ -11,7 +11,7 @@ Australia,nan
 Austria,nan
 Azerbaijan,nan
 Bahrain,nan
-Bangladesh,severe localized food insecurity
+Bangladesh,nan
 Barbados,nan
 Belarus,nan
 Belgium,nan
@@ -24,15 +24,15 @@ Botswana,nan
 Brazil,nan
 Brunei,nan
 Bulgaria,nan
-Burkina Faso,severe localized food insecurity
-Burma,severe localized food insecurity
-Burundi,widespread lack of access
+Burkina Faso,nan
+Burma,nan
+Burundi,nan
 Cabo Verde,nan
 Cambodia,nan
-Cameroon,severe localized food insecurity
+Cameroon,nan
 Canada,nan
-Central African Republic,exceptional shortfall in aggregate food production/supplies
-Chad,widespread lack of access
+Central African Republic,nan
+Chad,nan
 Chile,nan
 China,nan
 Colombia,nan
@@ -43,9 +43,9 @@ Croatia,nan
 Cuba,nan
 Cyprus,nan
 Czechia,nan
-Democratic Republic of the Congo,widespread lack of access
+Democratic Republic of the Congo,nan
 Denmark,nan
-Djibouti,widespread lack of access
+Djibouti,nan
 Dominica,nan
 Dominican Republic,nan
 Ecuador,nan
@@ -54,8 +54,8 @@ El Salvador,nan
 Equatorial Guinea,nan
 Eritrea,nan
 Estonia,nan
-Eswatini,severe localized food insecurity
-Ethiopia,widespread lack of access
+Eswatini,nan
+Ethiopia,nan
 Federated States of Micronesia,nan
 Fiji,nan
 Finland,nan
@@ -67,10 +67,10 @@ Ghana,nan
 Greece,nan
 Grenada,nan
 Guatemala,nan
-Guinea,severe localized food insecurity
+Guinea,nan
 Guinea-Bissau,nan
 Guyana,nan
-Haiti,widespread lack of access
+Haiti,nan
 Holy See,nan
 Honduras,nan
 Hungary,nan
@@ -93,21 +93,21 @@ Kuwait,nan
 Kyrgyzstan,nan
 Laos,nan
 Latvia,nan
-Lebanon,widespread lack of access
-Lesotho,severe localized food insecurity
-Liberia,severe localized food insecurity
-Libya,severe localized food insecurity
+Lebanon,nan
+Lesotho,nan
+Liberia,nan
+Libya,nan
 Liechtenstein,nan
 Lithuania,nan
 Luxembourg,nan
-Madagascar,severe localized food insecurity
-Malawi,widespread lack of access
+Madagascar,nan
+Malawi,nan
 Malaysia,nan
 Maldives,nan
-Mali,severe localized food insecurity
+Mali,nan
 Malta,nan
 Marshall Islands,nan
-Mauritania,widespread lack of access
+Mauritania,nan
 Mauritius,nan
 Mexico,nan
 Moldova,nan
@@ -115,20 +115,20 @@ Monaco,nan
 Mongolia,nan
 Montenegro,nan
 Morocco,nan
-Mozambique,severe localized food insecurity
-Namibia,severe localized food insecurity
+Mozambique,nan
+Namibia,nan
 Nauru,nan
 Nepal,nan
 Netherlands,nan
 New Zealand,nan
 Nicaragua,nan
-Niger,widespread lack of access
-Nigeria,widespread lack of access
-North Korea,widespread lack of access
+Niger,nan
+Nigeria,nan
+North Korea,nan
 North Macedonia,nan
 Norway,nan
 Oman,nan
-Pakistan,severe localized food insecurity
+Pakistan,nan
 Palau,nan
 Panama,nan
 Papua New Guinea,nan
@@ -138,7 +138,7 @@ Philippines,nan
 Poland,nan
 Portugal,nan
 Qatar,nan
-Republic of the Congo,severe localized food insecurity
+Republic of the Congo,nan
 Romania,nan
 Russia,nan
 Rwanda,nan
@@ -149,26 +149,26 @@ Samoa,nan
 San Marino,nan
 Sao Tome and Principe,nan
 Saudi Arabia,nan
-Senegal,severe localized food insecurity
+Senegal,nan
 Serbia,nan
 Seychelles,nan
-Sierra Leone,severe localized food insecurity
+Sierra Leone,nan
 Singapore,nan
 Slovakia,nan
 Slovenia,nan
 Solomon Islands,nan
-Somalia,exceptional shortfall in aggregate food production/supplies
+Somalia,nan
 South Korea,nan
-South Sudan,widespread lack of access
+South Sudan,nan
 Spain,nan
-Sri Lanka,widespread lack of access
-Sudan,severe localized food insecurity
+Sri Lanka,nan
+Sudan,nan
 Suriname,nan
 Sweden,nan
 Switzerland,nan
-Syria,exceptional shortfall in aggregate food production/supplies
+Syria,nan
 Tajikistan,nan
-Tanzania,severe localized food insecurity
+Tanzania,nan
 Thailand,nan
 The Bahamas,nan
 The Gambia,nan
@@ -180,16 +180,16 @@ Tunisia,nan
 Turkey,nan
 Turkmenistan,nan
 Tuvalu,nan
-Uganda,severe localized food insecurity
-Ukraine,widespread lack of access
+Uganda,nan
+Ukraine,nan
 United Arab Emirates,nan
 United Kingdom,nan
 United States,nan
 Uruguay,nan
 Uzbekistan,nan
 Vanuatu,nan
-Venezuela,widespread lack of access
+Venezuela,nan
 Vietnam,nan
-Yemen,widespread lack of access
-Zambia,severe localized food insecurity
-Zimbabwe,widespread lack of access
+Yemen,nan
+Zambia,nan
+Zimbabwe,nan

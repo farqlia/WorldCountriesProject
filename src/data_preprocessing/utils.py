@@ -27,6 +27,19 @@ def assign_continents(countries=None):
     return geographic_overview
 
 
+def get_median_age(report_missing=True):
+
+    median_age = downloading.open_metric('median age')['total']
+    nan_index = median_age[median_age.isna()].index
+    median_age = median_age.drop(nan_index)
+
+    if report_missing:
+        print("Dropping: ", nan_index)
+
+    median_age.name = 'median age'
+
+    return median_age
+
 def get_continents():
 
     geographic_overview = pd.read_csv(DATA_PATH / 'geographic_overview.csv')
@@ -53,8 +66,6 @@ def get_location_df():
 
 # Plan for this: download and join all dataframes
 def merge_metrics(index):
-    infant_mortality_rate = downloading.open_metric('infant mortality rate')
-    population_growth_rate = downloading.open_metric('population growth rate')
     birth_rate = downloading.open_metric('birth rate')
     alcohol_consumption_per_capita = downloading.open_metric('alcohol consumption per capita')
     child_marriage = downloading.open_metric('child marriage')
@@ -62,25 +73,18 @@ def merge_metrics(index):
     death_rate = downloading.open_metric('death rate')
     contraceptive_prevalence = downloading.open_metric('contraceptive prevalence rate')
     currently_married_women_ages_15_49 = downloading.open_metric('currently married women ages 15 49')
-    maternal_mortality_ratio = downloading.open_metric('maternal mortality ratio')
     health_expenditures = downloading.open_metric('current health expenditure')
     gdp_per_capita = downloading.open_metric('real gdp per capita')
     labor_force_by_occupation = downloading.open_metric('labor force by occupation')
     literacy = downloading.open_metric('literacy')
-    education_expenditures = downloading.open_metric('education expenditures')
     population_below_poverty = downloading.open_metric('population below poverty line')
     mothers_mean_age_at_first_birth = downloading.open_metric('mothers mean age at first birth')
     physicians_density = downloading.open_metric('physicians density')
-    school_life_expectancy = downloading.open_metric('school life expectancy primary to tertiary education')
     tobacco_use = downloading.open_metric('tobacco use')
-    drinking_water_source = downloading.open_metric('drinking water source')
     population = downloading.open_metric('population')
-    taxes_and_other_revenues = downloading.open_metric('taxes and other revenues')
 
     countries_data = pd.DataFrame(index=index)
 
-    countries_data['infant mortality rate'] = infant_mortality_rate['total']
-    countries_data['population growth rate'] = population_growth_rate['rate']
     countries_data['alcohol consumption per capita'] = alcohol_consumption_per_capita['total']
     countries_data['tobacco use total'] = tobacco_use['total']
     countries_data['women marriage by 18'] = child_marriage['women married by age 18']
@@ -98,14 +102,12 @@ def merge_metrics(index):
         index=labor_force_by_occupation.index)
     countries_data['services occupation ratio'] = labor_force_by_occupation['services']
     countries_data['contraceptive prevalence'] = contraceptive_prevalence['rate']
-    countries_data['maternal mortality ratio'] = maternal_mortality_ratio['rate']
     countries_data['mothers mean age at first birth'] = mothers_mean_age_at_first_birth['rate']
     countries_data['health expenditures'] = health_expenditures['expenditures']
     countries_data['gdp per capita'] = gdp_per_capita['gdp per capita']
+    countries_data['net migration rate'] = downloading.open_metric('net migration rate')['rate']
     countries_data['literacy total'] = literacy['total population']  
     countries_data['physicians density'] = physicians_density['rate']
-    countries_data['school life expectancy'] = school_life_expectancy['total']
-    countries_data['education expenditures'] = education_expenditures['rate']
     countries_data['population below poverty'] = population_below_poverty['rate']
     countries_data['population size'] = population['population']
 
