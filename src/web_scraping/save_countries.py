@@ -23,9 +23,6 @@ def save_countries():
 
 # Note that metric "geographic overview" should be downloaded before all other metrics
 def get_all_countries():
-    print("DOWNLOAD COUNTRIES")
-    if not COUNTRIES_PATH.exists():
-        save_countries()
     with open(COUNTRIES_PATH) as f:
         reader = csv.reader(f, delimiter=',')
         next(reader)
